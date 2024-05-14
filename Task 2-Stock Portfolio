@@ -1,0 +1,34 @@
+class StockPortfolio:
+    def __init__(self):
+        self.stocks = {}
+
+    def add_stock(self, symbol, price, quantity):
+        if symbol in self.stocks:
+            self.stocks[symbol]["quantity"] += quantity
+        else:
+            self.stocks[symbol] = {"price": price, "quantity": quantity}
+
+    def remove_stock(self, symbol, quantity):
+        if symbol in self.stocks:
+            if quantity >= self.stocks[symbol]["quantity"]:
+                del self.stocks[symbol]
+            else:
+                self.stocks[symbol]["quantity"] -= quantity
+
+    def portfolio_value(self):
+        value = 0
+        for symbol, data in self.stocks.items():
+            value += data["quantity"] * data["price"]
+        return value
+
+    def display_portfolio(self):
+        print("Stock Portfolio:")
+        for symbol, data in self.stocks.items():
+            print(f"{symbol}: {data['quantity']} shares | Price per share: ${data['price']:.2f}")
+        print(f"Total Portfolio Value: ${self.portfolio_value():.2f}")
+
+if __name__ == "__main__":
+    portfolio = StockPortfolio()
+    portfolio.add_stock("TATA", 150.00, 10)
+    portfolio.add_stock("JIO", 200.00, 5)
+    portfolio.display_portfolio()
